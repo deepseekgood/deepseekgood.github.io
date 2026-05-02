@@ -15,10 +15,28 @@ export default function ArticleDetail() {
     if (found) {
       setArticle(found)
       setRelatedArticles(articles.filter(a => a.id !== found.id).slice(0, 3))
+      
+      // 检查是否已收藏
+      const favorites = JSON.parse(localStorage.getItem('favorites') || '[]')
+      setIsFavorited(favorites.includes(found.id))
     } else {
       navigate('/')
     }
   }, [id, navigate])
+
+  const handleFavorite = () => {
+    const favorites = JSON.parse(localStorage.getItem('favorites') || '[]')
+    let newFavorites
+    
+    if (isFavorited) {
+      newFavorites = favorites.filter(favId => favId !== article.id)
+    } else {
+      newFavorites = [...favorites, article.id]
+    }
+    
+    localStorage.setItem('favorites', JSON.stringify(newFavorites))
+    setIsFavorited(!isFavorited)
+  }
 
   if (!article) return null
 
@@ -50,7 +68,7 @@ export default function ArticleDetail() {
           <span className="text-xs">{isLiked ? '已点赞' : '点赞'}</span>
         </button>
         <button
-          onClick={() => setIsFavorited(!isFavorited)}
+          onClick={handleFavorite}
           className={`flex flex-col items-center gap-1 ${isFavorited ? 'text-yellow-500' : 'text-gray-400'}`}
         >
           <span className="text-2xl">★</span>

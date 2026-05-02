@@ -15,7 +15,7 @@ export default function Settings() {
       return
     }
 
-    const savedSettings = localStorage.getItem('settings')
+    const savedSettings = localStorage.getItem('appSettings')
     if (savedSettings) {
       const settings = JSON.parse(savedSettings)
       setNotifications(settings.notifications ?? true)
@@ -24,9 +24,17 @@ export default function Settings() {
     }
   }, [user, navigate])
 
+  const toggleNotifications = () => {
+    setNotifications(prev => !prev)
+  }
+
+  const toggleDarkMode = () => {
+    setDarkMode(prev => !prev)
+  }
+
   const saveSettings = () => {
     const settings = { notifications, darkMode, fontSize }
-    localStorage.setItem('settings', JSON.stringify(settings))
+    localStorage.setItem('appSettings', JSON.stringify(settings))
     alert('设置已保存')
   }
 
@@ -54,21 +62,17 @@ export default function Settings() {
       {/* Notification Settings */}
       <div className="bg-white rounded-2xl p-5 shadow-sm mb-4">
         <h2 className="font-bold text-gray-800 mb-4">通知设置</h2>
-        <div className="flex items-center justify-between">
+        <div 
+          className="flex items-center justify-between cursor-pointer"
+          onClick={toggleNotifications}
+        >
           <div>
             <div className="font-medium text-gray-700">消息通知</div>
             <div className="text-sm text-gray-500">接收预约确认、系统消息等通知</div>
           </div>
-          <button
-            onClick={() => setNotifications(!notifications)}
-            className={`w-14 h-8 rounded-full transition-colors ${
-              notifications ? 'bg-purple-600' : 'bg-gray-300'
-            }`}
-          >
-            <div className={`w-6 h-6 bg-white rounded-full shadow-md transform transition-transform ${
-              notifications ? 'translate-x-7' : 'translate-x-1'
-            }`} />
-          </button>
+          <div className={`w-14 h-8 rounded-full transition-colors relative ${notifications ? 'bg-purple-600' : 'bg-gray-300'}`}>
+            <div className={`w-6 h-6 bg-white rounded-full shadow-md absolute top-1 transition-transform ${notifications ? 'left-7' : 'left-1'}`} />
+          </div>
         </div>
       </div>
 
@@ -76,21 +80,17 @@ export default function Settings() {
       <div className="bg-white rounded-2xl p-5 shadow-sm mb-4">
         <h2 className="font-bold text-gray-800 mb-4">显示设置</h2>
         
-        <div className="flex items-center justify-between mb-4">
+        <div 
+          className="flex items-center justify-between mb-4 cursor-pointer"
+          onClick={toggleDarkMode}
+        >
           <div>
             <div className="font-medium text-gray-700">深色模式</div>
             <div className="text-sm text-gray-500">减少眼睛疲劳</div>
           </div>
-          <button
-            onClick={() => setDarkMode(!darkMode)}
-            className={`w-14 h-8 rounded-full transition-colors ${
-              darkMode ? 'bg-purple-600' : 'bg-gray-300'
-            }`}
-          >
-            <div className={`w-6 h-6 bg-white rounded-full shadow-md transform transition-transform ${
-              darkMode ? 'translate-x-7' : 'translate-x-1'
-            }`} />
-          </button>
+          <div className={`w-14 h-8 rounded-full transition-colors relative ${darkMode ? 'bg-purple-600' : 'bg-gray-300'}`}>
+            <div className={`w-6 h-6 bg-white rounded-full shadow-md absolute top-1 transition-transform ${darkMode ? 'left-7' : 'left-1'}`} />
+          </div>
         </div>
 
         <div>
