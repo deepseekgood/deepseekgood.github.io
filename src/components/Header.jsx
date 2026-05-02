@@ -19,41 +19,41 @@ export default function Header() {
 
   return (
     <header className="bg-gradient-to-r from-purple-600 via-purple-500 to-indigo-600 text-white sticky top-0 z-50 shadow-lg">
-      <div className="max-w-5xl mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
-          <Link to="/" className="flex items-center gap-2 text-xl font-bold">
-            <span className="text-2xl">🌿</span>
-            <span className="gradient-text" style={{background: 'linear-gradient(135deg, #fff, #e0e7ff)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent'}}>心灵导航</span>
+      <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-14 sm:h-16">
+          <Link to="/" className="flex items-center gap-2 text-lg sm:text-xl font-bold">
+            <span className="text-xl sm:text-2xl">🌿</span>
+            <span className="gradient-text hidden sm:inline" style={{background: 'linear-gradient(135deg, #fff, #e0e7ff)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent'}}>心灵导航</span>
           </Link>
-          <nav className="flex items-center gap-2">
+          <nav className="flex items-center gap-1 sm:gap-2">
             {navItems.map(item => (
               <Link
                 key={item.path}
                 to={item.path}
-                className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 ${
+                className={`flex items-center gap-1 sm:gap-1.5 px-2 sm:px-4 py-1.5 sm:py-2 rounded-lg sm:rounded-xl text-xs sm:text-sm font-medium transition-all duration-300 ${
                   isActive(item.path)
                     ? 'bg-white/20 text-white shadow-inner'
                     : 'text-white/80 hover:bg-white/10 hover:text-white'
                 }`}
               >
-                <span className="text-base">{item.icon}</span>
+                <span className="text-sm sm:text-base">{item.icon}</span>
                 <span className="hidden sm:inline">{item.label}</span>
               </Link>
             ))}
             {user ? (
               <button
                 onClick={signOut}
-                className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-medium text-white/80 hover:bg-white/10 hover:text-white transition-all duration-300"
+                className="flex items-center gap-1 sm:gap-1.5 px-2 sm:px-4 py-1.5 sm:py-2 rounded-lg sm:rounded-xl text-xs sm:text-sm font-medium text-white/80 hover:bg-white/10 hover:text-white transition-all duration-300"
               >
-                <span className="text-base">🚪</span>
+                <span className="text-sm sm:text-base">🚪</span>
                 <span className="hidden sm:inline">退出</span>
               </button>
             ) : (
               <Link
                 to="/login"
-                className="flex items-center gap-1.5 px-5 py-2 rounded-xl text-sm font-medium bg-white text-purple-600 hover:bg-purple-50 transition-all duration-300 shadow-md"
+                className="flex items-center gap-1 sm:gap-1.5 px-3 sm:px-5 py-1.5 sm:py-2 rounded-lg sm:rounded-xl text-xs sm:text-sm font-medium bg-white text-purple-600 hover:bg-purple-50 transition-all duration-300 shadow-md"
               >
-                <span className="text-base">✨</span>
+                <span className="text-sm sm:text-base">✨</span>
                 <span>登录</span>
               </Link>
             )}
