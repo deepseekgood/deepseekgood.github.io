@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { questions } from '../data'
+import { useAuth } from '../lib/auth'
+import { saveTestResult } from '../lib/db'
 
 const options = [
   { value: 1, label: '非常不符合' },
@@ -12,6 +14,7 @@ const options = [
 
 export default function Quiz() {
   const navigate = useNavigate()
+  const { user } = useAuth()
   const [currentIndex, setCurrentIndex] = useState(0)
   const [answers, setAnswers] = useState({})
   const currentQuestion = questions[currentIndex]
@@ -34,7 +37,7 @@ export default function Quiz() {
     if (currentIndex < questions.length - 1) setCurrentIndex(currentIndex + 1)
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const scores = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0 }
 
     questions.forEach((q, i) => {
@@ -66,6 +69,10 @@ export default function Quiz() {
     const records = JSON.parse(localStorage.getItem('testRecords') || '[]')
     records.unshift(result)
     localStorage.setItem('testRecords', JSON.stringify(records))
+
+    if (user) {
+      await saveTestResult(user.id, result)
+    }
 
     navigate('/test/result')
   }
@@ -123,7 +130,7 @@ export default function Quiz() {
         {isLast ? (
           <button
             onClick={handleSubmit}
-            disabled={answeredCount < questions.length}
+            disabled={answeredCount === 0}
             className="flex-1 py-3 rounded-xl bg-purple-600 text-white font-medium disabled:opacity-50 hover:bg-purple-700 transition-colors"
           >
             提交测试

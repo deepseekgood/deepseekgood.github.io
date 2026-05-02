@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate, Link } from 'react-router-dom'
 import { articles } from '../data'
 
 export default function ArticleDetail() {
@@ -8,11 +8,13 @@ export default function ArticleDetail() {
   const [article, setArticle] = useState(null)
   const [isLiked, setIsLiked] = useState(false)
   const [isFavorited, setIsFavorited] = useState(false)
+  const [relatedArticles, setRelatedArticles] = useState([])
 
   useEffect(() => {
     const found = articles.find(a => a.id === parseInt(id))
     if (found) {
       setArticle(found)
+      setRelatedArticles(articles.filter(a => a.id !== found.id).slice(0, 3))
     } else {
       navigate('/')
     }
@@ -39,7 +41,7 @@ export default function ArticleDetail() {
       />
 
       {/* Actions */}
-      <div className="flex items-center justify-around bg-white rounded-xl p-4 shadow-sm">
+      <div className="flex items-center justify-around bg-white rounded-xl p-4 shadow-sm mb-6">
         <button
           onClick={() => setIsLiked(!isLiked)}
           className={`flex flex-col items-center gap-1 ${isLiked ? 'text-red-500' : 'text-gray-400'}`}
@@ -73,6 +75,25 @@ export default function ArticleDetail() {
           <span className="text-xs">分享</span>
         </button>
       </div>
+
+      {/* Related Articles */}
+      {relatedArticles.length > 0 && (
+        <div className="bg-white rounded-xl p-5 shadow-sm">
+          <h2 className="font-bold text-gray-800 mb-4">相关文章</h2>
+          <div className="space-y-3">
+            {relatedArticles.map(related => (
+              <Link
+                key={related.id}
+                to={`/articles/${related.id}`}
+                className="block p-3 rounded-lg hover:bg-gray-50 transition-colors"
+              >
+                <h3 className="font-medium text-gray-800 mb-1">{related.title}</h3>
+                <p className="text-sm text-gray-500 line-clamp-2">{related.desc}</p>
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   )
 }

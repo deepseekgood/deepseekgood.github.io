@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { counselors } from '../data'
+import { useAuth } from '../lib/auth'
+import { getAppointments } from '../lib/db'
 
 const typeLabels = {
   video: '视频咨询',
@@ -24,14 +26,32 @@ const statusColors = {
 }
 
 export default function Orders() {
+  const navigate = useNavigate()
+  const { user } = useAuth()
   const [orders, setOrders] = useState([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const stored = localStorage.getItem('orders')
-    if (stored) {
-      setOrders(JSON.parse(stored))
+    if (!user) {
+      navigate('/login')
+      return
     }
-  }, [])
+
+    const loadOrders = async () => {
+      const { data } = await getAppointments(user.id)
+      if (data && data.length > 0) {
+        setOrders(data)
+      } else {
+        const stored = localStorage.getItem('orders')
+        if (stored) {
+          setOrders(JSON.parse(stored))
+        }
+      }
+      setLoading(false)
+    }
+
+    loadOrders()
+  }, [user, navigate])
 
   const handleCancel = (index) => {
     if (confirm('确定要取消这个预约吗？')) {
@@ -42,11 +62,18 @@ export default function Orders() {
     }
   }
 
+  if (!user) return null
+
   return (
     <div className="max-w-2xl mx-auto px-4 py-6">
       <h1 className="text-xl font-bold text-gray-800 mb-6">预约记录</h1>
 
-      {orders.length === 0 ? (
+      {loading ? (
+        <div className="text-center py-16">
+          <div className="text-4xl mb-4">⏳</div>
+          <p className="text-gray-500">加载中...</p>
+        </div>
+      ) : orders.length === 0 ? (
         <div className="text-center py-16">
           <div className="text-4xl mb-4">📋</div>
           <p className="text-gray-500 mb-4">暂无预约记录</p>
@@ -60,17 +87,19 @@ export default function Orders() {
       ) : (
         <div className="space-y-4">
           {orders.map((order, index) => {
-            const counselor = counselors.find(c => c.id === order.counselorId)
+            const counselorId = order.counselor_id || order.counselorId
+            const counselorName = order.counselor_name || order.counselorName
+            const counselor = counselors.find(c => c.id === counselorId)
 
             return (
-              <div key={order.id} className="bg-white rounded-xl p-5 shadow-sm">
+              <div key={order.id || index} className="bg-white rounded-xl p-5 shadow-sm">
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-3">
                     <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center text-purple-600 font-bold">
-                      {order.counselorName[0]}
+                      {counselorName[0]}
                     </div>
                     <div>
-                      <div className="font-bold text-gray-800">{order.counselorName}</div>
+                      <div className="font-bold text-gray-800">{counselorName}</div>
                       <div className="text-xs text-gray-500">订单号：{order.id}</div>
                     </div>
                   </div>
@@ -80,10 +109,10 @@ export default function Orders() {
                 </div>
 
                 <div className="grid grid-cols-2 gap-2 text-sm text-gray-600 mb-4">
-                  <div>咨询类型：{typeLabels[order.type]}</div>
+                  <div>咨询类型：{typeLabels[order.method || order.type]}</div>
                   <div>预约日期：{order.date}</div>
                   <div>预约时间：{order.time}</div>
-                  <div>咨询费用：¥{order.price}</div>
+                  <div>咨询费用：¥{order.price || counselor?.price}</div>
                 </div>
 
                 {order.status === 'pending' && (

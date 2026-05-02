@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { counselors } from '../data'
+import { useAuth } from '../lib/auth'
+import { saveAppointment } from '../lib/db'
 
 const consultTypes = [
   { name: '视频', value: 'video', icon: '📹' },
@@ -35,6 +37,7 @@ const timeSlots = [
 export default function Appointment() {
   const { id } = useParams()
   const navigate = useNavigate()
+  const { user } = useAuth()
   const [counselor, setCounselor] = useState(null)
   const [selectedType, setSelectedType] = useState('video')
   const [selectedDate, setSelectedDate] = useState('')
@@ -83,7 +86,7 @@ export default function Appointment() {
     }
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!selectedDate) { alert('请选择咨询日期'); return }
     if (!selectedTime) { alert('请选择咨询时间'); return }
     if (selectedProblems.length === 0) { alert('请选择咨询问题类型'); return }
@@ -108,6 +111,10 @@ export default function Appointment() {
     const orders = JSON.parse(localStorage.getItem('orders') || '[]')
     orders.unshift(appointment)
     localStorage.setItem('orders', JSON.stringify(orders))
+
+    if (user) {
+      await saveAppointment(user.id, appointment)
+    }
 
     alert('预约成功！咨询师会在24小时内确认您的预约，请保持手机畅通。')
     navigate('/profile')

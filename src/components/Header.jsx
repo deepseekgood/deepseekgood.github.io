@@ -1,4 +1,5 @@
 import { Link, useLocation } from 'react-router-dom'
+import { useAuth } from '../lib/auth'
 
 const navItems = [
   { path: '/', label: '首页' },
@@ -9,6 +10,7 @@ const navItems = [
 
 export default function Header() {
   const location = useLocation()
+  const { user, signOut } = useAuth()
 
   const isActive = (path) => {
     if (path === '/') return location.pathname === '/'
@@ -20,7 +22,7 @@ export default function Header() {
       <div className="max-w-4xl mx-auto px-4">
         <div className="flex items-center justify-between h-14">
           <Link to="/" className="text-xl font-bold">心灵导航</Link>
-          <nav className="flex gap-1">
+          <nav className="flex items-center gap-1">
             {navItems.map(item => (
               <Link
                 key={item.path}
@@ -34,6 +36,21 @@ export default function Header() {
                 {item.label}
               </Link>
             ))}
+            {user ? (
+              <button
+                onClick={signOut}
+                className="px-4 py-2 rounded-lg text-sm font-medium text-purple-100 hover:bg-purple-500"
+              >
+                退出
+              </button>
+            ) : (
+              <Link
+                to="/login"
+                className="px-4 py-2 rounded-lg text-sm font-medium text-purple-100 hover:bg-purple-500"
+              >
+                登录
+              </Link>
+            )}
           </nav>
         </div>
       </div>

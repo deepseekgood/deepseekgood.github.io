@@ -1,13 +1,21 @@
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { enneagramTypes, typeColors } from '../data'
+import { useAuth } from '../lib/auth'
 
 export default function Profile() {
+  const navigate = useNavigate()
+  const { user, signOut } = useAuth()
   const [testResult, setTestResult] = useState(null)
   const [typeName, setTypeName] = useState('')
   const [typeColor, setTypeColor] = useState('')
 
   useEffect(() => {
+    if (!user) {
+      navigate('/login')
+      return
+    }
+
     const stored = localStorage.getItem('testResult')
     if (stored) {
       const result = JSON.parse(stored)
@@ -15,7 +23,14 @@ export default function Profile() {
       setTypeName(enneagramTypes[result.primaryType].name)
       setTypeColor(typeColors[result.primaryType])
     }
-  }, [])
+  }, [user, navigate])
+
+  const handleLogout = async () => {
+    await signOut()
+    navigate('/')
+  }
+
+  if (!user) return null
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-6">
@@ -26,7 +41,7 @@ export default function Profile() {
             👤
           </div>
           <div>
-            <h1 className="text-xl font-bold">用户</h1>
+            <h1 className="text-xl font-bold">{user.email}</h1>
             {testResult && (
               <div className="flex items-center gap-2 mt-1">
                 <span
@@ -120,6 +135,13 @@ export default function Profile() {
           <span className="text-gray-400">&gt;</span>
         </button>
       </div>
+
+      <button
+        onClick={handleLogout}
+        className="w-full py-3 bg-red-100 text-red-600 rounded-xl font-medium hover:bg-red-200 transition-colors"
+      >
+        退出登录
+      </button>
     </div>
   )
 }
