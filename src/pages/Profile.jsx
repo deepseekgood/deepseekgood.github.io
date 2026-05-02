@@ -96,44 +96,44 @@ export default function Profile() {
           </div>
           <span className="text-gray-400">&gt;</span>
         </Link>
-        <button className="flex items-center justify-between p-4 border-b w-full hover:bg-gray-50 transition-colors">
+        <Link to="/profile/favorites" className="flex items-center justify-between p-4 border-b hover:bg-gray-50 transition-colors">
           <div className="flex items-center gap-3">
             <span className="text-xl">⭐</span>
             <span className="text-gray-700">我的收藏</span>
           </div>
           <span className="text-gray-400">&gt;</span>
-        </button>
-        <button className="flex items-center justify-between p-4 border-b w-full hover:bg-gray-50 transition-colors">
+        </Link>
+        <Link to="/profile/history" className="flex items-center justify-between p-4 border-b hover:bg-gray-50 transition-colors">
           <div className="flex items-center gap-3">
             <span className="text-xl">📖</span>
             <span className="text-gray-700">浏览历史</span>
           </div>
           <span className="text-gray-400">&gt;</span>
-        </button>
+        </Link>
       </div>
 
       <div className="bg-white rounded-xl shadow-sm overflow-hidden mb-4">
-        <button className="flex items-center justify-between p-4 border-b w-full hover:bg-gray-50 transition-colors">
+        <Link to="/about" className="flex items-center justify-between p-4 border-b hover:bg-gray-50 transition-colors">
           <div className="flex items-center gap-3">
             <span className="text-xl">ℹ️</span>
             <span className="text-gray-700">关于我们</span>
           </div>
           <span className="text-gray-400">&gt;</span>
-        </button>
-        <button className="flex items-center justify-between p-4 border-b w-full hover:bg-gray-50 transition-colors">
+        </Link>
+        <Link to="/feedback" className="flex items-center justify-between p-4 border-b hover:bg-gray-50 transition-colors">
           <div className="flex items-center gap-3">
             <span className="text-xl">💬</span>
             <span className="text-gray-700">意见反馈</span>
           </div>
           <span className="text-gray-400">&gt;</span>
-        </button>
-        <button className="flex items-center justify-between p-4 w-full hover:bg-gray-50 transition-colors">
+        </Link>
+        <Link to="/settings" className="flex items-center justify-between p-4 w-full hover:bg-gray-50 transition-colors">
           <div className="flex items-center gap-3">
             <span className="text-xl">⚙️</span>
             <span className="text-gray-700">设置</span>
           </div>
           <span className="text-gray-400">&gt;</span>
-        </button>
+        </Link>
       </div>
 
       <button

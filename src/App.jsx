@@ -13,6 +13,11 @@ import Profile from './pages/Profile'
 import Records from './pages/Records'
 import Orders from './pages/Orders'
 import Login from './pages/Login'
+import Favorites from './pages/Favorites'
+import History from './pages/History'
+import About from './pages/About'
+import Feedback from './pages/Feedback'
+import Settings from './pages/Settings'
 
 function App() {
   return (
@@ -34,6 +39,11 @@ function App() {
               <Route path="/profile" element={<Profile />} />
               <Route path="/profile/records" element={<Records />} />
               <Route path="/profile/orders" element={<Orders />} />
+              <Route path="/profile/favorites" element={<Favorites />} />
+              <Route path="/profile/history" element={<History />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/feedback" element={<Feedback />} />
+              <Route path="/settings" element={<Settings />} />
             </Routes>
           </main>
         </div>
