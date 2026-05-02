@@ -2,10 +2,10 @@ import { Link, useLocation } from 'react-router-dom'
 import { useAuth } from '../lib/auth'
 
 const navItems = [
-  { path: '/', label: '首页' },
-  { path: '/test', label: '测试' },
-  { path: '/counselors', label: '咨询' },
-  { path: '/profile', label: '我的' },
+  { path: '/', label: '首页', icon: '🏠' },
+  { path: '/test', label: '测试', icon: '🧠' },
+  { path: '/counselors', label: '咨询', icon: '💬' },
+  { path: '/profile', label: '我的', icon: '👤' },
 ]
 
 export default function Header() {
@@ -18,37 +18,43 @@ export default function Header() {
   }
 
   return (
-    <header className="bg-purple-600 text-white sticky top-0 z-50">
-      <div className="max-w-4xl mx-auto px-4">
-        <div className="flex items-center justify-between h-14">
-          <Link to="/" className="text-xl font-bold">心灵导航</Link>
-          <nav className="flex items-center gap-1">
+    <header className="bg-gradient-to-r from-purple-600 via-purple-500 to-indigo-600 text-white sticky top-0 z-50 shadow-lg">
+      <div className="max-w-5xl mx-auto px-4">
+        <div className="flex items-center justify-between h-16">
+          <Link to="/" className="flex items-center gap-2 text-xl font-bold">
+            <span className="text-2xl">🌿</span>
+            <span className="gradient-text" style={{background: 'linear-gradient(135deg, #fff, #e0e7ff)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent'}}>心灵导航</span>
+          </Link>
+          <nav className="flex items-center gap-2">
             {navItems.map(item => (
               <Link
                 key={item.path}
                 to={item.path}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 ${
                   isActive(item.path)
-                    ? 'bg-purple-700 text-white'
-                    : 'text-purple-100 hover:bg-purple-500'
+                    ? 'bg-white/20 text-white shadow-inner'
+                    : 'text-white/80 hover:bg-white/10 hover:text-white'
                 }`}
               >
-                {item.label}
+                <span className="text-base">{item.icon}</span>
+                <span className="hidden sm:inline">{item.label}</span>
               </Link>
             ))}
             {user ? (
               <button
                 onClick={signOut}
-                className="px-4 py-2 rounded-lg text-sm font-medium text-purple-100 hover:bg-purple-500"
+                className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-medium text-white/80 hover:bg-white/10 hover:text-white transition-all duration-300"
               >
-                退出
+                <span className="text-base">🚪</span>
+                <span className="hidden sm:inline">退出</span>
               </button>
             ) : (
               <Link
                 to="/login"
-                className="px-4 py-2 rounded-lg text-sm font-medium text-purple-100 hover:bg-purple-500"
+                className="flex items-center gap-1.5 px-5 py-2 rounded-xl text-sm font-medium bg-white text-purple-600 hover:bg-purple-50 transition-all duration-300 shadow-md"
               >
-                登录
+                <span className="text-base">✨</span>
+                <span>登录</span>
               </Link>
             )}
           </nav>

@@ -2,87 +2,128 @@ import { Link } from 'react-router-dom'
 import { enneagramTypes, typeColors, counselors, articles } from '../data'
 
 const banners = [
-  { title: '探索你的九型人格', desc: '了解自己，发现内在潜能', bg: 'from-purple-500 to-purple-700' },
-  { title: '专业心理咨询', desc: '遇见更好的自己', bg: 'from-red-400 to-red-600' },
-  { title: '心理健康知识', desc: '每天学一点心理学', bg: 'from-teal-400 to-teal-600' },
+  { title: '探索你的九型人格', desc: '了解自己，发现内在潜能', bg: 'from-violet-500 via-purple-500 to-fuchsia-500', icon: '🔮' },
+  { title: '专业心理咨询', desc: '遇见更好的自己', bg: 'from-cyan-500 via-blue-500 to-indigo-500', icon: '💚' },
+  { title: '心理健康知识', desc: '每天学一点心理学', bg: 'from-amber-400 via-orange-500 to-red-500', icon: '📚' },
+]
+
+const quickEntries = [
+  { path: '/test', label: '九型人格测试', icon: '🧠', color: 'from-violet-400 to-purple-500', desc: '发现你的人格类型' },
+  { path: '/counselors', label: '心理咨询', icon: '💬', color: 'from-cyan-400 to-blue-500', desc: '专业心理支持' },
+  { path: '/profile/records', label: '测试记录', icon: '📊', color: 'from-emerald-400 to-teal-500', desc: '查看历史记录' },
+  { path: '/profile', label: '个人中心', icon: '👤', color: 'from-amber-400 to-orange-500', desc: '管理个人信息' },
 ]
 
 export default function Home() {
   return (
-    <div className="max-w-4xl mx-auto px-4 py-6">
-      {/* Banner */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-        {banners.map((banner, i) => (
-          <div key={i} className={`bg-gradient-to-r ${banner.bg} rounded-2xl p-6 text-white`}>
-            <h2 className="text-xl font-bold mb-2">{banner.title}</h2>
-            <p className="text-sm opacity-90">{banner.desc}</p>
-          </div>
-        ))}
+    <div className="max-w-5xl mx-auto px-4 py-8">
+      {/* Hero Banner */}
+      <div className="mb-10">
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-bold mb-3">
+            <span className="gradient-text">心灵导航</span>
+          </h1>
+          <p className="text-gray-600 text-lg">探索内心世界，遇见更好的自己</p>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          {banners.map((banner, i) => (
+            <div key={i} className={`bg-gradient-to-br ${banner.bg} rounded-2xl p-6 text-white card-hover cursor-pointer`}>
+              <div className="text-4xl mb-3">{banner.icon}</div>
+              <h2 className="text-xl font-bold mb-2">{banner.title}</h2>
+              <p className="text-sm opacity-90">{banner.desc}</p>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* Quick Entry */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
-        <Link to="/test" className="flex flex-col items-center p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow">
-          <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center text-xl mb-2">测</div>
-          <span className="text-sm text-gray-700">九型人格测试</span>
-        </Link>
-        <Link to="/counselors" className="flex flex-col items-center p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow">
-          <div className="w-12 h-12 bg-teal-100 rounded-full flex items-center justify-center text-xl mb-2">咨</div>
-          <span className="text-sm text-gray-700">心理咨询</span>
-        </Link>
-        <Link to="/profile/records" className="flex flex-col items-center p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow">
-          <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-xl mb-2">记</div>
-          <span className="text-sm text-gray-700">测试记录</span>
-        </Link>
-        <Link to="/profile" className="flex flex-col items-center p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow">
-          <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-xl mb-2">我</div>
-          <span className="text-sm text-gray-700">个人中心</span>
-        </Link>
+      <div className="mb-10">
+        <h2 className="text-xl font-bold text-gray-800 mb-5 flex items-center gap-2">
+          <span className="text-2xl">✨</span>
+          快速入口
+        </h2>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {quickEntries.map((entry, i) => (
+            <Link
+              key={i}
+              to={entry.path}
+              className="group bg-white rounded-2xl p-5 shadow-sm hover:shadow-purple card-hover text-center"
+            >
+              <div className={`w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br ${entry.color} flex items-center justify-center text-3xl mb-3 group-hover:scale-110 transition-transform`}>
+                {entry.icon}
+              </div>
+              <h3 className="font-bold text-gray-800 mb-1">{entry.label}</h3>
+              <p className="text-xs text-gray-500">{entry.desc}</p>
+            </Link>
+          ))}
+        </div>
       </div>
 
       {/* Enneagram Types */}
-      <section className="mb-8">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-bold text-gray-800">九型人格</h2>
-          <Link to="/test" className="text-sm text-purple-600 hover:text-purple-700">了解更多 &gt;</Link>
+      <section className="mb-10">
+        <div className="flex items-center justify-between mb-5">
+          <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
+            <span className="text-2xl">🎯</span>
+            九型人格
+          </h2>
+          <Link to="/test" className="text-sm text-purple-600 hover:text-purple-700 font-medium">
+            了解更多 →
+          </Link>
         </div>
         <div className="grid grid-cols-3 md:grid-cols-9 gap-3">
           {Object.entries(enneagramTypes).map(([type, info]) => (
             <Link
               key={type}
               to="/test"
-              className="flex flex-col items-center p-3 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow"
+              className="flex flex-col items-center p-4 bg-white rounded-2xl shadow-sm hover:shadow-purple card-hover"
             >
               <div
-                className="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold mb-2"
-                style={{ backgroundColor: typeColors[type] }}
+                className="w-12 h-12 rounded-xl flex items-center justify-center text-white font-bold text-lg mb-2 shadow-lg"
+                style={{ 
+                  backgroundColor: typeColors[type],
+                  boxShadow: `0 4px 15px ${typeColors[type]}40`
+                }}
               >
                 {type}
               </div>
-              <span className="text-xs text-gray-700 text-center">{info.name}</span>
+              <span className="text-xs text-gray-700 text-center font-medium">{info.name}</span>
             </Link>
           ))}
         </div>
       </section>
 
       {/* Articles */}
-      <section className="mb-8">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-bold text-gray-800">心理文章</h2>
+      <section className="mb-10">
+        <div className="flex items-center justify-between mb-5">
+          <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
+            <span className="text-2xl">📖</span>
+            心理文章
+          </h2>
         </div>
-        <div className="space-y-3">
-          {articles.map(article => (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {articles.slice(0, 4).map(article => (
             <Link
               key={article.id}
               to={`/articles/${article.id}`}
-              className="block bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow"
+              className="bg-white rounded-2xl p-5 shadow-sm hover:shadow-purple card-hover"
             >
-              <h3 className="font-medium text-gray-800 mb-2">{article.title}</h3>
-              <p className="text-sm text-gray-500 mb-3">{article.desc}</p>
-              <div className="flex items-center gap-3 text-xs text-gray-400">
-                <span className="bg-purple-100 text-purple-600 px-2 py-1 rounded">{article.tag}</span>
-                <span>{article.time}</span>
-                <span>{article.readCount}人阅读</span>
+              <div className="flex items-start gap-3">
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-400 to-pink-400 flex items-center justify-center text-white text-xl flex-shrink-0">
+                  📝
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-bold text-gray-800 mb-2 line-clamp-1">{article.title}</h3>
+                  <p className="text-sm text-gray-500 mb-3 line-clamp-2">{article.desc}</p>
+                  <div className="flex items-center gap-3 text-xs text-gray-400">
+                    <span className="bg-purple-50 text-purple-600 px-2 py-1 rounded-lg font-medium">{article.tag}</span>
+                    <span>{article.time}</span>
+                    <span className="flex items-center gap-1">
+                      <span>👁️</span>
+                      {article.readCount}
+                    </span>
+                  </div>
+                </div>
               </div>
             </Link>
           ))}
@@ -90,40 +131,66 @@ export default function Home() {
       </section>
 
       {/* Counselors */}
-      <section>
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-bold text-gray-800">推荐咨询师</h2>
-          <Link to="/counselors" className="text-sm text-purple-600 hover:text-purple-700">更多 &gt;</Link>
+      <section className="mb-10">
+        <div className="flex items-center justify-between mb-5">
+          <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
+            <span className="text-2xl">👨‍⚕️</span>
+            推荐咨询师
+          </h2>
+          <Link to="/counselors" className="text-sm text-purple-600 hover:text-purple-700 font-medium">
+            更多 →
+          </Link>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {counselors.slice(0, 3).map(c => (
             <Link
               key={c.id}
               to={`/counselors/${c.id}`}
-              className="bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow"
+              className="bg-white rounded-2xl p-5 shadow-sm hover:shadow-purple card-hover"
             >
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center text-purple-600 font-bold">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-400 to-indigo-500 flex items-center justify-center text-white text-2xl font-bold shadow-lg">
                   {c.name[0]}
                 </div>
                 <div>
-                  <div className="font-medium text-gray-800">{c.name}</div>
-                  <div className="text-xs text-gray-500">{c.title}</div>
+                  <div className="font-bold text-gray-800 text-lg">{c.name}</div>
+                  <div className="text-sm text-gray-500">{c.title}</div>
                 </div>
               </div>
-              <div className="flex flex-wrap gap-1 mb-3">
-                {c.tags.slice(0, 2).map(tag => (
-                  <span key={tag} className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">{tag}</span>
+              <div className="flex flex-wrap gap-2 mb-4">
+                {c.tags.slice(0, 3).map(tag => (
+                  <span key={tag} className="text-xs bg-purple-50 text-purple-600 px-3 py-1.5 rounded-full font-medium">{tag}</span>
                 ))}
               </div>
-              <div className="flex items-center justify-between">
-                <span className="text-red-500 font-bold">¥{c.price}<span className="text-xs text-gray-400 font-normal">/次</span></span>
-                {c.isOnline && <span className="text-xs text-green-500">● 在线</span>}
+              <div className="flex items-center justify-between pt-3 border-t border-gray-100">
+                <div className="flex items-center gap-3 text-sm text-gray-500">
+                  <span className="flex items-center gap-1">
+                    <span>📊</span>
+                    {c.cases}案例
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <span>⭐</span>
+                    {c.rating}
+                  </span>
+                </div>
+                <span className="text-red-500 font-bold text-lg">¥{c.price}<span className="text-xs text-gray-400 font-normal">/次</span></span>
               </div>
+              {c.isOnline && (
+                <div className="mt-3 flex items-center gap-2 text-sm text-green-600 bg-green-50 rounded-lg px-3 py-2">
+                  <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                  在线可咨询
+                </div>
+              )}
             </Link>
           ))}
         </div>
       </section>
+
+      {/* Footer */}
+      <footer className="text-center py-8 text-gray-500 text-sm">
+        <p>🌿 心灵导航 - 探索内心世界，遇见更好的自己</p>
+        <p className="mt-2">专业心理健康服务平台</p>
+      </footer>
     </div>
   )
 }
