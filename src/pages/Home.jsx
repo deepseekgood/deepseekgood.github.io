@@ -102,7 +102,7 @@ export default function Home() {
           </h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {articles.slice(0, 4).map(article => (
+          {articles.map(article => (
             <Link
               key={article.id}
               to={`/articles/${article.id}`}
