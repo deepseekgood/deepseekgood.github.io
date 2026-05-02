@@ -7,6 +7,7 @@ export default function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
+  const [success, setSuccess] = useState('')
   const [loading, setLoading] = useState(false)
   const { signIn, signUp } = useAuth()
   const navigate = useNavigate()
@@ -14,6 +15,7 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setError('')
+    setSuccess('')
     setLoading(true)
 
     try {
@@ -22,7 +24,14 @@ export default function Login() {
         : await signUp(email, password)
 
       if (error) throw error
-      navigate('/profile')
+      
+      if (!isLogin) {
+        setSuccess('注册成功！正在自动登录...')
+        // 等待一下再跳转
+        setTimeout(() => navigate('/profile'), 1000)
+      } else {
+        navigate('/profile')
+      }
     } catch (err) {
       setError(err.message)
     } finally {
@@ -40,6 +49,12 @@ export default function Login() {
         {error && (
           <div className="bg-red-50 text-red-600 p-3 rounded-lg mb-4 text-sm">
             {error}
+          </div>
+        )}
+
+        {success && (
+          <div className="bg-green-50 text-green-600 p-3 rounded-lg mb-4 text-sm">
+            {success}
           </div>
         )}
 
@@ -85,12 +100,22 @@ export default function Login() {
         <div className="mt-6 text-center text-sm text-gray-600">
           {isLogin ? '还没有账号？' : '已有账号？'}
           <button
-            onClick={() => setIsLogin(!isLogin)}
+            onClick={() => {
+              setIsLogin(!isLogin)
+              setError('')
+              setSuccess('')
+            }}
             className="ml-1 text-purple-600 hover:text-purple-700"
           >
             {isLogin ? '立即注册' : '去登录'}
           </button>
         </div>
+
+        {!isLogin && (
+          <div className="mt-4 text-xs text-gray-400 text-center">
+            注册后将自动登录，无需验证邮箱
+          </div>
+        )}
       </div>
     </div>
   )

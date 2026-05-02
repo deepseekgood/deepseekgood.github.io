@@ -20,7 +20,20 @@ export function AuthProvider({ children }) {
     return () => subscription.unsubscribe()
   }, [])
 
-  const signUp = (email, password) => supabase.auth.signUp({ email, password })
+  const signUp = async (email, password) => {
+    const { data, error } = await supabase.auth.signUp({ 
+      email, 
+      password,
+      options: {
+        emailRedirectTo: window.location.origin
+      }
+    })
+    // 如果没有错误且用户已创建，直接登录
+    if (!error && data.user) {
+      await supabase.auth.signInWithPassword({ email, password })
+    }
+    return { data, error }
+  }
   const signIn = (email, password) => supabase.auth.signInWithPassword({ email, password })
   const signOut = () => supabase.auth.signOut()
 
