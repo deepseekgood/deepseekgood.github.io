@@ -23,7 +23,7 @@ export default function Home() {
           <h1 className="text-4xl font-bold mb-3">
             <span className="gradient-text">心灵导航</span>
           </h1>
-          <p className="text-gray-600 text-lg">探索内心世界，遇见更好的自己</p>
+          <p className="text-gray-600 dark:text-gray-300 text-lg">探索内心世界，遇见更好的自己</p>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -39,7 +39,7 @@ export default function Home() {
 
       {/* Quick Entry */}
       <div className="mb-10">
-        <h2 className="text-xl font-bold text-gray-800 mb-5 flex items-center gap-2">
+        <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-5 flex items-center gap-2">
           <span className="text-2xl">✨</span>
           快速入口
         </h2>
@@ -48,13 +48,13 @@ export default function Home() {
             <Link
               key={i}
               to={entry.path}
-              className="group bg-white rounded-2xl p-5 shadow-sm hover:shadow-purple card-hover text-center"
+              className="group bg-white dark:bg-gray-800 rounded-2xl p-5 shadow-sm hover:shadow-purple card-hover text-center"
             >
               <div className={`w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br ${entry.color} flex items-center justify-center text-3xl mb-3 group-hover:scale-110 transition-transform`}>
                 {entry.icon}
               </div>
-              <h3 className="font-bold text-gray-800 mb-1">{entry.label}</h3>
-              <p className="text-xs text-gray-500">{entry.desc}</p>
+              <h3 className="font-bold text-gray-800 dark:text-white mb-1">{entry.label}</h3>
+              <p className="text-xs text-gray-500 dark:text-gray-400">{entry.desc}</p>
             </Link>
           ))}
         </div>
@@ -63,11 +63,11 @@ export default function Home() {
       {/* Enneagram Types */}
       <section className="mb-10">
         <div className="flex items-center justify-between mb-5">
-          <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
+          <h2 className="text-xl font-bold text-gray-800 dark:text-white flex items-center gap-2">
             <span className="text-2xl">🎯</span>
             九型人格
           </h2>
-          <Link to="/test" className="text-sm text-purple-600 hover:text-purple-700 font-medium">
+          <Link to="/test" className="text-sm text-purple-600 dark:text-purple-400 hover:text-purple-700 font-medium">
             了解更多 →
           </Link>
         </div>
@@ -76,7 +76,7 @@ export default function Home() {
             <Link
               key={type}
               to="/test"
-              className="flex flex-col items-center p-4 bg-white rounded-2xl shadow-sm hover:shadow-purple card-hover"
+              className="flex flex-col items-center p-4 bg-white dark:bg-gray-800 rounded-2xl shadow-sm hover:shadow-purple card-hover"
             >
               <div
                 className="w-12 h-12 rounded-xl flex items-center justify-center text-white font-bold text-lg mb-2 shadow-lg"
@@ -87,7 +87,7 @@ export default function Home() {
               >
                 {type}
               </div>
-              <span className="text-xs text-gray-700 text-center font-medium">{info.name}</span>
+              <span className="text-xs text-gray-700 dark:text-gray-300 text-center font-medium">{info.name}</span>
             </Link>
           ))}
         </div>
@@ -96,7 +96,7 @@ export default function Home() {
       {/* Articles */}
       <section className="mb-10">
         <div className="flex items-center justify-between mb-5">
-          <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
+          <h2 className="text-xl font-bold text-gray-800 dark:text-white flex items-center gap-2">
             <span className="text-2xl">📖</span>
             心理文章
           </h2>
@@ -106,17 +106,17 @@ export default function Home() {
             <Link
               key={article.id}
               to={`/articles/${article.id}`}
-              className="bg-white rounded-2xl p-5 shadow-sm hover:shadow-purple card-hover"
+              className="bg-white dark:bg-gray-800 rounded-2xl p-5 shadow-sm hover:shadow-purple card-hover"
             >
               <div className="flex items-start gap-3">
                 <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-400 to-pink-400 flex items-center justify-center text-white text-xl flex-shrink-0">
                   📝
                 </div>
                 <div className="flex-1">
-                  <h3 className="font-bold text-gray-800 mb-2 line-clamp-1">{article.title}</h3>
-                  <p className="text-sm text-gray-500 mb-3 line-clamp-2">{article.desc}</p>
-                  <div className="flex items-center gap-3 text-xs text-gray-400">
-                    <span className="bg-purple-50 text-purple-600 px-2 py-1 rounded-lg font-medium">{article.tag}</span>
+                  <h3 className="font-bold text-gray-800 dark:text-white mb-2 line-clamp-1">{article.title}</h3>
+                  <p className="text-sm text-gray-500 dark:text-gray-400 mb-3 line-clamp-2">{article.desc}</p>
+                  <div className="flex items-center gap-3 text-xs text-gray-400 dark:text-gray-500">
+                    <span className="bg-purple-50 dark:bg-purple-900 text-purple-600 dark:text-purple-400 px-2 py-1 rounded-lg font-medium">{article.tag}</span>
                     <span>{article.time}</span>
                     <span className="flex items-center gap-1">
                       <span>👁️</span>
@@ -133,11 +133,11 @@ export default function Home() {
       {/* Counselors */}
       <section className="mb-10">
         <div className="flex items-center justify-between mb-5">
-          <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
+          <h2 className="text-xl font-bold text-gray-800 dark:text-white flex items-center gap-2">
             <span className="text-2xl">👨‍⚕️</span>
             推荐咨询师
           </h2>
-          <Link to="/counselors" className="text-sm text-purple-600 hover:text-purple-700 font-medium">
+          <Link to="/counselors" className="text-sm text-purple-600 dark:text-purple-400 hover:text-purple-700 font-medium">
             更多 →
           </Link>
         </div>
@@ -146,24 +146,24 @@ export default function Home() {
             <Link
               key={c.id}
               to={`/counselors/${c.id}`}
-              className="bg-white rounded-2xl p-5 shadow-sm hover:shadow-purple card-hover"
+              className="bg-white dark:bg-gray-800 rounded-2xl p-5 shadow-sm hover:shadow-purple card-hover"
             >
               <div className="flex items-center gap-4 mb-4">
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-400 to-indigo-500 flex items-center justify-center text-white text-2xl font-bold shadow-lg">
                   {c.name[0]}
                 </div>
                 <div>
-                  <div className="font-bold text-gray-800 text-lg">{c.name}</div>
-                  <div className="text-sm text-gray-500">{c.title}</div>
+                  <div className="font-bold text-gray-800 dark:text-white text-lg">{c.name}</div>
+                  <div className="text-sm text-gray-500 dark:text-gray-400">{c.title}</div>
                 </div>
               </div>
               <div className="flex flex-wrap gap-2 mb-4">
                 {c.tags.slice(0, 3).map(tag => (
-                  <span key={tag} className="text-xs bg-purple-50 text-purple-600 px-3 py-1.5 rounded-full font-medium">{tag}</span>
+                  <span key={tag} className="text-xs bg-purple-50 dark:bg-purple-900 text-purple-600 dark:text-purple-400 px-3 py-1.5 rounded-full font-medium">{tag}</span>
                 ))}
               </div>
-              <div className="flex items-center justify-between pt-3 border-t border-gray-100">
-                <div className="flex items-center gap-3 text-sm text-gray-500">
+              <div className="flex items-center justify-between pt-3 border-t border-gray-100 dark:border-gray-700">
+                <div className="flex items-center gap-3 text-sm text-gray-500 dark:text-gray-400">
                   <span className="flex items-center gap-1">
                     <span>📊</span>
                     {c.cases}案例
@@ -176,7 +176,7 @@ export default function Home() {
                 <span className="text-red-500 font-bold text-lg">¥{c.price}<span className="text-xs text-gray-400 font-normal">/次</span></span>
               </div>
               {c.isOnline && (
-                <div className="mt-3 flex items-center gap-2 text-sm text-green-600 bg-green-50 rounded-lg px-3 py-2">
+                <div className="mt-3 flex items-center gap-2 text-sm text-green-600 bg-green-50 dark:bg-green-900 rounded-lg px-3 py-2">
                   <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
                   在线可咨询
                 </div>
@@ -187,7 +187,7 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="text-center py-8 text-gray-500 text-sm">
+      <footer className="text-center py-8 text-gray-500 dark:text-gray-400 text-sm">
         <p>🌿 心灵导航 - 探索内心世界，遇见更好的自己</p>
         <p className="mt-2">专业心理健康服务平台</p>
       </footer>

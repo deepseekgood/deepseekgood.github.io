@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --primary: #7C3AED;
   --primary-light: #A78BFA;
@@ -21,6 +23,11 @@ body {
   font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
   background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
   min-height: 100vh;
+  transition: background-color 0.3s ease;
+}
+
+.dark body {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
 }
 
 .gradient-text {
@@ -37,6 +44,10 @@ body {
 .card-hover:hover {
   transform: translateY(-2px);
   box-shadow: 0 10px 40px rgba(124, 58, 237, 0.15);
+}
+
+.dark .card-hover:hover {
+  box-shadow: 0 10px 40px rgba(124, 58, 237, 0.3);
 }
 
 .animate-float {
@@ -63,10 +74,25 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
+.dark .glass-effect {
+  background: rgba(30, 30, 50, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
 .shadow-purple {
   box-shadow: 0 4px 20px rgba(124, 58, 237, 0.2);
 }
 
 .shadow-warm {
   box-shadow: 0 4px 20px rgba(245, 158, 11, 0.2);
+}
+
+/* 深色模式过渡效果 */
+* {
+  transition-property: background-color, border-color, color;
+  transition-duration: 0ms;
+}
+
+.dark * {
+  transition-duration: 300ms;
 }
